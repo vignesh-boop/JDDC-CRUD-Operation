@@ -1,0 +1,75 @@
+package com.connection;
+import java.sql.*;
+
+public class Conn {
+
+	public static void main(String[] args) throws SQLException, ClassNotFoundException {
+(* 		viewData();
+		insertData();
+		deleteData(); *)
+		updateData();
+		
+	}
+	public static void viewData()throws SQLException {
+		
+		String url = "jdbc:mysql://localhost:3306/new_schema";
+		String username ="root";
+		String password = "Black@6836";
+		
+		String query ="SELECT * FROM employees";
+		Connection con = DriverManager.getConnection(url,username,password);
+		Statement st =con.createStatement();
+		ResultSet rs = st.executeQuery(query);
+		while(rs.next()) {
+			System.out.println("ID : "+rs.getInt(1));
+			System.out.println("FIRST_NAME : "+rs.getString(2));
+			System.out.println("LAST_NAME : "+rs.getString(3));
+			System.out.println("DATE : "+rs.getString(4));
+		}
+		con.close();
+	
+}
+	public static void insertData() throws SQLException {
+
+		String url = "jdbc:mysql://localhost:3306/new_schema";
+		String username ="root";
+		String password = "Black@6836";
+		int id =3;
+		String first_name ="MANOJ";
+		String last_name ="KUMAR";
+		String date ="2004-06-20";
+		
+		String query ="insert into employees value(?,?,?,?)";
+		Connection con = DriverManager.getConnection(url,username,password);
+		PreparedStatement ps = con.prepareStatement(query);
+		ps.setInt(1, 4);
+		ps.setString(2,first_name);
+		ps.setString(3, last_name);
+		ps.setDate(4,java.sql.Date.valueOf(date));
+		int rows = ps.executeUpdate();
+		System.out.println(rows);
+	}
+	public static void deleteData()throws SQLException{
+		String url = "jdbc:mysql://localhost:3306/new_schema";
+		String username ="root";
+		String password = "Black@6836";
+		int id =4;
+	
+		String query ="delete from employees where employee_id="+id;
+		Connection con = DriverManager.getConnection(url,username,password);
+		Statement st = con.createStatement();
+		int rows = st.executeUpdate(query);
+				System.out.println(rows);
+	}
+	public static void updateData()throws SQLException{
+		String url = "jdbc:mysql://localhost:3306/new_schema";
+		String username ="root";
+		String password = "Black@6836";
+		int id =1;
+		String query ="update employees set last_name ='kumar' where employee_id="+id;
+		Connection con = DriverManager.getConnection(url,username,password);
+		Statement st = con.createStatement();
+		System.out.println(st.executeUpdate(query));
+		
+	}
+}
